@@ -45,19 +45,6 @@ class Client
             break;
         }
 
-        switch ($response->getHeader('content-type'))
-        {
-            case "application/json":
-            {
-                return $response->json();
-            }
-            break;
-
-            default:
-            {
-                return $response->getBody()->getContents();
-            }
-            break;
-        }
+        return json_decode($response->getBody()->getContents());
     }
 }

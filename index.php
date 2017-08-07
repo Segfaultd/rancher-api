@@ -9,7 +9,7 @@ try
     $dotenv->load();
 
     $rancher = new Rancher(getenv('RANCHER_URL'), getenv('RANCHER_ACCESS'), getenv('RANCHER_SECRET'));
-    var_dump($rancher->containers()->getAll());
+    echo json_encode($rancher->containers()->getAll());
 }
 catch(Exception $e)
 {

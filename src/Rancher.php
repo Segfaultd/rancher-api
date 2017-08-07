@@ -2,7 +2,7 @@
 namespace Tyldar\Rancher;
 
 use Tyldar\Rancher\Client;
-use Tyldar\Rancher\Resources\Container;
+use Tyldar\Rancher\Resources\Containers;
 
 class Rancher
 {
@@ -15,7 +15,7 @@ class Rancher
 
     public function containers()
     {
-        return new Container($this->client);
+        return new Containers($this->client);
     }
 }
 
