@@ -41,4 +41,28 @@ class Containers
         }
         return $retn;
     }
+
+    public function get($id)
+    {
+        $container = $this->client->request('GET', $this->endpoint.'/'.$id, []);
+        return $this->format($container);
+    }
+
+    public function start($id)
+    {
+        $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=start', []);
+        return $this->format($container);
+    }
+
+    public function stop($id)
+    {
+        $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=stop', []);
+        return $this->format($container);
+    }
+
+    public function restart($id)
+    {
+        $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=restart', []);
+        return $this->format($container);
+    }
 }
