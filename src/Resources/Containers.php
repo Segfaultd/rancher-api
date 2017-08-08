@@ -49,6 +49,12 @@ class Containers
         return $this->format($container, new Container());
     }
 
+    public function create(Container $cont)
+    {
+        $container = $this->client->request('POST', $this->endpoint, $cont->toArray());
+        return $this->format($container, new Container());
+    }
+
     public function console($id)
     {
         $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=start', []);

@@ -2,6 +2,7 @@
 namespace Tyldar\Rancher;
 
 use Tyldar\Rancher\Client;
+use Tyldar\Rancher\Helpers;
 use Tyldar\Rancher\Resources\Containers;
 use Tyldar\Rancher\Resources\Services;
 
@@ -12,6 +13,11 @@ class Rancher
     public function __construct($url, $access, $secret, $project = "")
     {
         $this->client = new Client($url, $access, $secret, $project);
+    }
+
+    public function helpers()
+    {
+        return new Helpers($this->client);
     }
 
     public function containers()

@@ -1,7 +1,7 @@
 <?php
 namespace Tyldar\Rancher\Inputs;
 
-class AbstractInput
+abstract class AbstractInput
 {
     public function set($data) {
         foreach ($data as $key => $value)

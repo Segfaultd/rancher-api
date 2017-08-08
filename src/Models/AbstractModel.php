@@ -1,7 +1,7 @@
 <?php
 namespace Tyldar\Rancher\Models;
 
-class AbstractModel
+abstract class AbstractModel
 {
     public function set($data) {
         foreach ($data as $key => $value)
@@ -10,5 +10,14 @@ class AbstractModel
                 $this->{$key} = $value;
             }
         }
+    }
+
+    public function toArray()
+    {
+        $result = array();
+        foreach ($this as $key => $value) {
+            $result[$key] = $value;
+        }
+        return $result;
     }
 }
