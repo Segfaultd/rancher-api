@@ -55,6 +55,12 @@ class Containers
         return $this->format($container, new Container());
     }
 
+    public function remove($id)
+    {
+        $container = $this->client->request('DELETE', $this->endpoint.'/'.$id, []);
+        return $this->format($container, new Container());
+    }
+
     public function console($id)
     {
         $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=start', []);
