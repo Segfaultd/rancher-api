@@ -18,13 +18,12 @@ class Services
         $this->endpoint = 'services';
     }
 
-    private function format($service)
+    private function format($container, $tmp)
     {
-        unset($service->links);
-        unset($service->actions);
+        unset($container->links);
+        unset($container->actions);
 
-        $tmp = new Service();
-        $tmp->set($service);
+        $tmp->set($container);
 
         unset($tmp->_readOnlyFields);
 
@@ -41,7 +40,7 @@ class Services
             if($service->type != "service")
                 continue;
 
-            array_push($retn, $this->format($service));
+            array_push($retn, $this->format($service, new Service()));
         }
         return $retn;
     }
@@ -49,49 +48,49 @@ class Services
     public function get($id)
     {
         $service = $this->client->request('GET', $this->endpoint.'/'.$id, []);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
     
     public function activate($id)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=activate', []);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 
     public function addServiceLink($id, AddRemoveServiceLink $datas)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=addservicelink', $datas);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 
     public function cancelUpgrade($id)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=cancelupgrade', []);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 
     public function continueUpgrade($id)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=continueupgrade', []);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 
     public function deactivate($id)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=deactivate', []);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 
     public function finishUpgrade($id)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=finishupgrade', []);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 
     public function removeServiceLink($id, AddRemoveServiceLink $datas)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=removeservicelink', $datas);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 
     public function restart($id)
@@ -103,24 +102,24 @@ class Services
             ]
         ];
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=restart', $data);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 
     public function rollback($id)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=rollback', []);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 
     public function setServiceLinks($id, SetServiceLinks $links)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=setservicelinks', $links);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 
     public function upgrade($id, UpgradeService $datas)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=upgrade', $datas);
-        return $this->format($service);
+        return $this->format($service, new Service());
     }
 }

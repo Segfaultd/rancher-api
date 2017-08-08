@@ -3,6 +3,8 @@ namespace Tyldar\Rancher\Resources;
 
 use Tyldar\Rancher\Models\Container;
 
+use Tyldar\Rancher\Inputs\InstanceConsole;
+
 class Containers
 {
     private $client;
@@ -14,12 +16,11 @@ class Containers
         $this->endpoint = 'containers';
     }
 
-    private function format($container)
+    private function format($container, $tmp)
     {
         unset($container->links);
         unset($container->actions);
 
-        $tmp = new Container();
         $tmp->set($container);
 
         unset($tmp->_readOnlyFields);
@@ -37,7 +38,7 @@ class Containers
             if($container->type != "container")
                 continue;
 
-            array_push($retn, $this->format($container));
+            array_push($retn, $this->format($container, new Container()));
         }
         return $retn;
     }
@@ -45,24 +46,30 @@ class Containers
     public function get($id)
     {
         $container = $this->client->request('GET', $this->endpoint.'/'.$id, []);
-        return $this->format($container);
+        return $this->format($container, new Container());
+    }
+
+    public function console($id)
+    {
+        $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=start', []);
+        return $this->format($container, new InstanceConsole());
     }
 
     public function start($id)
     {
         $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=start', []);
-        return $this->format($container);
+        return $this->format($container, new Container());
     }
 
     public function stop($id)
     {
         $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=stop', []);
-        return $this->format($container);
+        return $this->format($container, new Container());
     }
 
     public function restart($id)
     {
         $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=restart', []);
-        return $this->format($container);
+        return $this->format($container, new Container());
     }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace Tyldar\Rancher\Inputs;
 
-class SetServiceLinks {
+use Tyldar\Rancher\Inputs\AbstractInput;
+
+class SetServiceLinks extends AbstractInput {
     public $serviceLinks;
 }
