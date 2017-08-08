@@ -1,6 +1,10 @@
 <?php
 namespace Tyldar\Rancher\Resources;
 
+use Tyldar\Rancher\Inputs\AddRemoveServiceLink;
+use Tyldar\Rancher\Inputs\SetServiceLinks;
+use Tyldar\Rancher\Inputs\UpgradeService;
+
 use Tyldar\Rancher\Models\Service;
 
 class Services
@@ -54,9 +58,10 @@ class Services
         return $this->format($service);
     }
 
-    public function addServiceLink($id, $datas)
+    public function addServiceLink($id, AddRemoveServiceLink $datas)
     {
-        //TODO
+        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=addservicelink', $datas);
+        return $this->format($service);
     }
 
     public function cancelUpgrade($id)
@@ -83,9 +88,10 @@ class Services
         return $this->format($service);
     }
 
-    public function removeServiceLink($id, $datas)
+    public function removeServiceLink($id, AddRemoveServiceLink $datas)
     {
-        //TODO
+        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=removeservicelink', $datas);
+        return $this->format($service);
     }
 
     public function restart($id)
@@ -106,13 +112,15 @@ class Services
         return $this->format($service);
     }
 
-    public function setServiceLinks($id, $links)
+    public function setServiceLinks($id, SetServiceLinks $links)
     {
-        //TODO
+        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=setservicelinks', $links);
+        return $this->format($service);
     }
 
-    public function upgrade($id, $datas)
+    public function upgrade($id, UpgradeService $datas)
     {
-        //TODO
+        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=upgrade', $datas);
+        return $this->format($service);
     }
 }
