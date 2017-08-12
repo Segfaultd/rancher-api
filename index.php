@@ -8,12 +8,13 @@ try
     $dotenv = new Dotenv\Dotenv(__DIR__);
     $dotenv->load();
 
-    $rancher = new Rancher(getenv('RANCHER_URL'), getenv('RANCHER_ACCESS'), getenv('RANCHER_SECRET'));
-    echo json_encode($rancher->containers()->getAll());
+    $rancher = new Rancher(getenv('RANCHER_URL'), getenv('RANCHER_ACCESS'), getenv('RANCHER_SECRET'), "1a5");
+
+    echo json_encode($rancher->containers()->remove("1i39"));
 }
 catch(Exception $e)
 {
-    var_dump($e->getMessage());
+    var_dump($e->getResponse()->getBody()->getContents());
 }
 
 ?>
