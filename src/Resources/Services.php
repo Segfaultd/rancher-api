@@ -18,12 +18,12 @@ class Services
         $this->endpoint = 'services';
     }
 
-    private function format($container, $tmp)
+    private function format($service, $tmp)
     {
-        unset($container->links);
-        unset($container->actions);
+        unset($service->links);
+        unset($service->actions);
 
-        $tmp->set($container);
+        $tmp->set($service);
 
         unset($tmp->_readOnlyFields);
 
@@ -48,6 +48,18 @@ class Services
     public function get($id)
     {
         $service = $this->client->request('GET', $this->endpoint.'/'.$id, []);
+        return $this->format($service, new Service());
+    }
+
+    public function create(Service $service)
+    {
+        $service = $this->client->request('POST', $this->endpoint, $service->toArray());
+        return $this->format($service, new Service());
+    }
+
+    public function remove($id)
+    {
+        $service = $this->client->request('DELETE', $this->endpoint.'/'.$id, []);
         return $this->format($service, new Service());
     }
     
