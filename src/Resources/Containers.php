@@ -2,6 +2,7 @@
 namespace Tyldar\Rancher\Resources;
 
 use Tyldar\Rancher\Models\Container;
+use Tyldar\Rancher\Models\StatsAccess;
 
 use Tyldar\Rancher\Inputs\InstanceConsole;
 
@@ -83,5 +84,11 @@ class Containers
     {
         $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=restart', []);
         return $this->format($container, new Container());
+    }
+
+    public function stats($id)
+    {
+        $container = $this->client->request('GET', $this->endpoint.'/'.$id.'/containerstats', []);
+        return $this->format($container, new StatsAccess());
     }
 }
