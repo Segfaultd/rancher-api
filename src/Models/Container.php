@@ -45,6 +45,8 @@ class Container extends AbstractModel
 
     public $createIndex;
 
+    public $data;
+
     public $dataVolumeMounts;
 
     public $dataVolumes;
