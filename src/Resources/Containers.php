@@ -91,4 +91,10 @@ class Containers
         $container = $this->client->request('GET', $this->endpoint.'/'.$id.'/containerstats', []);
         return $this->format($container, new StatsAccess());
     }
+
+    public function logs($id)
+    {
+        $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=logs', ['follow'=>true, 'line'=>null]);
+        return $this->format($container, new StatsAccess());
+    }
 }
