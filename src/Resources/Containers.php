@@ -92,9 +92,9 @@ class Containers
         return $this->format($container, new StatsAccess());
     }
 
-    public function logs($id)
+    public function logs($id, $follow = false, $lines = null)
     {
-        $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=logs', ['follow'=>true, 'line'=>null]);
+        $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=logs', ['follow'=>$follow, 'line'=>$lines]);
         return $this->format($container, new StatsAccess());
     }
 }
