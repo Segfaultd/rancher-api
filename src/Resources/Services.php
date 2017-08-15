@@ -3,7 +3,7 @@ namespace Tyldar\Rancher\Resources;
 
 use Tyldar\Rancher\Inputs\AddRemoveServiceLink;
 use Tyldar\Rancher\Inputs\SetServiceLinks;
-use Tyldar\Rancher\Inputs\UpgradeService;
+use Tyldar\Rancher\Inputs\ServiceUpgrade;
 
 use Tyldar\Rancher\Models\Service;
 
@@ -129,7 +129,7 @@ class Services
         return $this->format($service, new Service());
     }
 
-    public function upgrade($id, UpgradeService $datas)
+    public function upgrade($id, ServiceUpgrade $datas)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=upgrade', $datas);
         return $this->format($service, new Service());
