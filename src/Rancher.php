@@ -6,6 +6,7 @@ use Tyldar\Rancher\Helpers;
 use Tyldar\Rancher\Resources\Containers;
 use Tyldar\Rancher\Resources\Services;
 use Tyldar\Rancher\Resources\Hosts;
+use Tyldar\Rancher\Resources\Stacks;
 
 class Rancher
 {
@@ -34,6 +35,11 @@ class Rancher
     public function hosts()
     {
         return new Hosts($this->client);
+    }
+
+    public function stacks()
+    {
+        return new Stacks($this->client);
     }
 }
 
