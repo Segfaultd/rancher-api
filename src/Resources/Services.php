@@ -71,7 +71,7 @@ class Services
 
     public function addServiceLink($id, AddRemoveServiceLink $datas)
     {
-        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=addservicelink', $datas);
+        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=addservicelink', $datas>toArray());
         return $this->format($service, new Service());
     }
 
@@ -101,7 +101,7 @@ class Services
 
     public function removeServiceLink($id, AddRemoveServiceLink $datas)
     {
-        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=removeservicelink', $datas);
+        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=removeservicelink', $datas>toArray());
         return $this->format($service, new Service());
     }
 
@@ -125,13 +125,13 @@ class Services
 
     public function setServiceLinks($id, SetServiceLinks $links)
     {
-        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=setservicelinks', $links);
+        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=setservicelinks', $links>toArray());
         return $this->format($service, new Service());
     }
 
     public function upgrade($id, ServiceUpgrade $datas)
     {
-        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=upgrade', $datas);
+        $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=upgrade', $datas->toArray());
         return $this->format($service, new Service());
     }
 }
