@@ -13,40 +13,51 @@ class Client
         $this->client = new HttpClient([
             'base_uri'  =>  $url,
             'auth'      =>  [$access, $secret],
+            "http_errors" => true,
         ]);
     }
 
     public function request($type = 'GET', $endpoint, array $params = [])
     {
         $response = null;
-        $payload = ["json"=>$params];
-        switch($type)
-        {
-            case 'GET':
-            {
-                $response = $this->client->get($endpoint, $params);
-            }
-            break;
+        try {
+            switch ($type) {
+                case 'GET':
+                {
+                    $response = $this->client->get($endpoint, $params);
+                }
+                break;
 
-            case 'POST':
-            {
-                $response = $this->client->post($endpoint, $payload);
-            }
-            break;
+                case 'POST':
+                {
+                    foreach($params as $key=>$p){
+                        if($p == NULL){
+                            unset($params[$key]);
+                        }
+                    }
+                    $payload = ["json"=>$params];
+                    $response = $this->client->post($endpoint, $payload);
+                }
+                break;
 
-            case 'PUT':
-            {
-                $response = $this->client->put($endpoint, $payload);
-            }
-            break;
+                case 'PUT':
+                {
+                    $response = $this->client->put($endpoint, $payload);
+                }
+                break;
 
-            case 'DELETE':
-            {
-                $response = $this->client->delete($endpoint, $payload);
+                case 'DELETE':
+                {
+                    $response = $this->client->delete($endpoint, $payload);
+                }
+                break;
             }
-            break;
+
+            return json_decode($response->getBody()->getContents());
         }
-
-        return json_decode($response->getBody()->getContents());
+        catch(GuzzleHttp\Exception\ClientException $e)
+        {
+            throw Exception($e->getMessage());
+        }
     }
 }
