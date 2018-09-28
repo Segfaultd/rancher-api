@@ -3,6 +3,7 @@ namespace Tyldar\Rancher\Resources;
 
 use Tyldar\Rancher\Models\Container;
 use Tyldar\Rancher\Models\StatsAccess;
+use Tyldar\Rancher\Models\ContainerExec;
 
 use Tyldar\Rancher\Inputs\InstanceConsole;
 
@@ -90,6 +91,14 @@ class Containers
     {
         $container = $this->client->request('GET', $this->endpoint.'/'.$id.'/containerstats', []);
         return $this->format($container, new StatsAccess());
+    }
+
+    public function execute($id, $command)
+    {
+        $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=execute', 
+            ['attachStdin'=>true, 'attachStdout'=>true, 'command'=>$command, 'tty'=>true]
+        );
+        return $this->format($container, new ContainerExec());
     }
 
     public function logs($id, $follow = false, $lines = null)
