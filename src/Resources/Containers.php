@@ -94,11 +94,9 @@ class Containers
         return $this->format($container, new StatsAccess());
     }
 
-    public function execute($id, $command)
+    public function execute($id, ContainerExec $exec)
     {
-        $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=execute', 
-            ['attachStdin'=>true, 'attachStdout'=>true, 'command'=>$command, 'tty'=>true]
-        );
+        $container = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=execute', $exec->toArray());
         return $this->format($container, new HostAccess());
     }
 
