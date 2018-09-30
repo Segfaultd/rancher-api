@@ -42,12 +42,14 @@ class Client
 
                 case 'PUT':
                 {
+                    $payload = ["json"=>$params];
                     $response = $this->client->put($endpoint, $payload);
                 }
                 break;
 
                 case 'DELETE':
                 {
+                    $payload = ["json"=>$params];
                     $response = $this->client->delete($endpoint, $payload);
                 }
                 break;
