@@ -53,11 +53,13 @@ class Service extends AbstractModel
 
     public $startOnCreate;
 
+    public $state;
+
     public $system;
 
     public $upgrade;
 
     public $vip;
 
-    public $_readOnlyFields = ["createIndex", "currentScale", "data", "fqdn", "healthState", "id", "instanceIds", "linkedServices", "system", "upgrade"];
+    public $_readOnlyFields = ["createIndex", "currentScale", "data", "fqdn", "healthState", "id", "instanceIds", "linkedServices", "state", "system", "upgrade"];
 };
