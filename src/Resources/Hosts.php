@@ -28,6 +28,42 @@ class Hosts
         return $tmp;
     }
 
+    /**
+     * @param array $criteria
+     *
+     * @return array
+     */
+    public function findBy($criteria)
+    {
+        $retn = [];
+
+        $services = $this->client->request('GET', $this->endpoint.'/?'.http_build_query($criteria), [])->data;
+        foreach($services as $key=>$service)
+        {
+            if($service->type != "service")
+                continue;
+
+            array_push($retn, $this->format($service, new Host()));
+        }
+        return $retn;
+    }
+
+    /**
+     * @param array $criteria
+     *
+     * @return Host|null
+     */
+    public function findOneBy($criteria)
+    {
+        $services = $this->findBy($criteria);
+
+        if (count($services) > 0) {
+            return $this->format($services[0], new Host());
+        }
+
+        return NULL;
+    }
+
     public function getAll()
     {
         $retn = [];
