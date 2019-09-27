@@ -45,6 +45,42 @@ class Services
         return $retn;
     }
 
+    /**
+     * @param array $criteria
+     *
+     * @return array
+     */
+    public function findBy($criteria)
+    {
+        $retn = [];
+
+        $services = $this->client->request('GET', $this->endpoint.'/?'.http_build_query($criteria), [])->data;
+        foreach($services as $key=>$service)
+        {
+            if($service->type != "service")
+                continue;
+
+            array_push($retn, $this->format($service, new Service()));
+        }
+        return $retn;
+    }
+
+    /**
+     * @param array $criteria
+     *
+     * @return Service|null
+     */
+    public function findOneBy($criteria)
+    {
+        $services = $this->findBy($criteria);
+
+        if (count($services) > 0) {
+            return $this->format($services[0], new Service());
+        }
+
+        return NULL;
+    }
+
     public function get($id)
     {
         $service = $this->client->request('GET', $this->endpoint.'/'.$id, []);
@@ -62,7 +98,7 @@ class Services
         $service = $this->client->request('DELETE', $this->endpoint.'/'.$id, []);
         return $this->format($service, new Service());
     }
-    
+
     public function activate($id)
     {
         $service = $this->client->request('POST', $this->endpoint.'/'.$id.'?action=activate', []);
