@@ -35,13 +35,13 @@ class Stacks
     {
         $retn = [];
 
-        $services = $this->client->request('GET', $this->endpoint.'/?'.http_build_query($criteria), [])->data;
-        foreach($services as $key=>$service)
+        $stacks = $this->client->request('GET', $this->endpoint.'/?'.http_build_query($criteria), [])->data;
+        foreach($stacks as $key=>$stack)
         {
-            if($service->type != "service")
+            if($stack->type != "stack")
                 continue;
 
-            array_push($retn, $this->format($service, new Stack()));
+            array_push($retn, $this->format($stack, new Stack()));
         }
         return $retn;
     }
@@ -53,10 +53,10 @@ class Stacks
      */
     public function findOneBy($criteria)
     {
-        $services = $this->findBy($criteria);
+        $stacks = $this->findBy($criteria);
 
-        if (count($services) > 0) {
-            return $this->format($services[0], new Stack());
+        if (count($stacks) > 0) {
+            return $this->format($stacks[0], new Stack());
         }
 
         return NULL;

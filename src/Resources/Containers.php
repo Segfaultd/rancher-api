@@ -40,13 +40,13 @@ class Containers
     {
         $retn = [];
 
-        $services = $this->client->request('GET', $this->endpoint.'/?'.http_build_query($criteria), [])->data;
-        foreach($services as $key=>$service)
+        $containers = $this->client->request('GET', $this->endpoint.'/?'.http_build_query($criteria), [])->data;
+        foreach($containers as $key=>$container)
         {
-            if($service->type != "service")
+            if($container->type != "container")
                 continue;
 
-            array_push($retn, $this->format($service, new Container()));
+            array_push($retn, $this->format($container, new Container()));
         }
         return $retn;
     }
@@ -58,10 +58,10 @@ class Containers
      */
     public function findOneBy($criteria)
     {
-        $services = $this->findBy($criteria);
+        $containers = $this->findBy($criteria);
 
-        if (count($services) > 0) {
-            return $this->format($services[0], new Container());
+        if (count($containers) > 0) {
+            return $this->format($containers[0], new Container());
         }
 
         return NULL;

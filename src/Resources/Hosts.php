@@ -37,13 +37,13 @@ class Hosts
     {
         $retn = [];
 
-        $services = $this->client->request('GET', $this->endpoint.'/?'.http_build_query($criteria), [])->data;
-        foreach($services as $key=>$service)
+        $hosts = $this->client->request('GET', $this->endpoint.'/?'.http_build_query($criteria), [])->data;
+        foreach($hosts as $key=>$host)
         {
-            if($service->type != "service")
+            if($host->type != "host")
                 continue;
 
-            array_push($retn, $this->format($service, new Host()));
+            array_push($retn, $this->format($host, new Host()));
         }
         return $retn;
     }
@@ -55,10 +55,10 @@ class Hosts
      */
     public function findOneBy($criteria)
     {
-        $services = $this->findBy($criteria);
+        $hosts = $this->findBy($criteria);
 
-        if (count($services) > 0) {
-            return $this->format($services[0], new Host());
+        if (count($hosts) > 0) {
+            return $this->format($hosts[0], new Host());
         }
 
         return NULL;
